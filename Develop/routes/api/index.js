@@ -8,3 +8,4 @@ router.use('/products', productRoutes);
 router.use('/tags', tagRoutes);
 
 module.exports = router;
+ // sets up the api routes by connecting the api routes
