@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { DataTypes } = require('sequelize/types');
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
@@ -6,7 +7,10 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // get all products
 router.get('/', async (req, res) => {
   try {
-
+    const getProducts = await Product.findAll({
+      include: [{model: Category}, {model: Tag}], 
+    });
+    res.status(200).json(getProducts);
   } catch(err) {
     res.status(500).json(err)
   }
@@ -15,9 +19,12 @@ router.get('/', async (req, res) => {
 });
 
 // get one product
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-
+    const getProductId = await Product.findByPk(req.params.id, {
+      include: [{model: Category}, {model: Tag}],
+    }); 
+    res.status(200).json(getProductId);
   } catch(err) {
     res.status(500).json(err)
   }
@@ -26,9 +33,29 @@ router.get('/:id', (req, res) => {
 });
 
 // create new product
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   try {
-
+    const createProduct = await Product.create(req.body, {
+      where: {
+        product_name: { 
+          type: DataTypes.STRING,
+        }, 
+        price: {
+          type: DataTypes.INTEGER, 
+        }, 
+        stock: { 
+          type: DataTypes.INTEGER, 
+        },
+        tagIds: {
+          type: DataTypes.INTEGER, 
+          references: {
+            model: 'tag',
+            key: 'id',
+          }
+        }
+      }
+    });
+    res.status(200).json(createProduct)
   } catch(err) {
     res.status(500).json(err)
   }
@@ -104,7 +131,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
 });
 

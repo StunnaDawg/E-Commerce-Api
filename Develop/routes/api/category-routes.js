@@ -44,9 +44,17 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const updateCategory = await Category.findByIdAndUpdate({
-      
-    })
+    const updateCategoryById = await Category.update({
+      where: {
+        id: req.params.id
+      }
+    });
+
+    if(!updateCategoryById[0]) {
+      res.status(404).json({message: `Category with that id does not exist!`})
+    }
+
+    res.status(200).json(updateCategoryById)
   } catch(err) {
     res.status(500).json(err)
   }
@@ -61,8 +69,8 @@ router.delete('/:id', async (req, res) => {
       }
     });
 
-    if(!deleteCategory) {
-      res.status(404).json({message: `Category with id ${id} does not exist!`})
+    if(!deleteCategory[0]) {
+      res.status(404).json({message: `Category with that id does not exist!`})
     }
 
     res.status(200).json(deleteCategory);
