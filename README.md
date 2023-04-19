@@ -27,11 +27,11 @@ Upon downloading the application make sure you do the following:
 
 ## Screenshots
 
-[!Alt](./Develop/images/Screenshot%202023-04-19%20at%202.27.21%20PM.png)
+[!ALT](./Develop/images/Screenshot%202023-04-19%20at%202.27.21%20PM.png)
 
-[!Alt](./Develop/images/Screenshot%202023-04-19%20at%202.25.51%20PM.png)
+[!ALT](./Develop/images/Screenshot%202023-04-19%20at%202.25.51%20PM.png)
 
-[!Alt](./Develop/images/Screenshot%202023-04-19%20at%202.24.56%20PM.png)
+[!ALT](./Develop/images/Screenshot%202023-04-19%20at%202.24.56%20PM.png)
 
 ## Demo Video Link
 
