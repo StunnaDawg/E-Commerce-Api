@@ -72,9 +72,6 @@ router.delete('/:id', async (req, res) => {
       }
     });
 
-    if(!deleteTag[0]) {
-      res.status(404).json({message: `Tag with that id does not exist!`})
-    }
 
     res.status(200).json(deleteTag);
   } catch(err) {
