@@ -32,7 +32,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const newTag = await Tag.create({
-      tag_id: req.body.tag_id,
+      tag_name: req.body.tag_name,
     });
     res.status(200).json(newTag);
 } catch(err) {
@@ -42,11 +42,16 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const updateTagById = await Tag.update({
-      where: {
-        id: req.params.id
+    const updateTagById = await Tag.update(
+      {
+        tag_name: req.body.tag_name,
+      },
+      {
+        where: {
+          id: req.params.id, 
+        }
       }
-    });
+    );
 
     if(!updateTagById[0]) {
       res.status(404).json({message: `Tag with that id does not exist!`})

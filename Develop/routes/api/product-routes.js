@@ -33,32 +33,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // create new product
-router.post('/', async (req, res) => {
-  try {
-    const createProduct = await Product.create(req.body, {
-      where: {
-        product_name: { 
-          type: DataTypes.STRING,
-        }, 
-        price: {
-          type: DataTypes.INTEGER, 
-        }, 
-        stock: { 
-          type: DataTypes.INTEGER, 
-        },
-        tagIds: {
-          type: DataTypes.INTEGER, 
-          references: {
-            model: 'tag',
-            key: 'id',
-          }
-        }
-      }
-    });
-    res.status(200).json(createProduct)
-  } catch(err) {
-    res.status(500).json(err)
-  }
+router.post('/', (req, res) => {
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -132,6 +107,17 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
+  try {
+    const deleteProduct = await Product.destroy({
+      where: {
+        id: req.params.id,
+      }
+    });
+
+    res.status(200).json(deleteProduct);
+  } catch(err) {
+    res.status(500).json(err)
+  }
   // delete one product by its `id` value
 });
 

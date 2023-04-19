@@ -33,7 +33,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
       const newCategory = await Category.create({
-        category_id: req.body.category_id,
+        category_name: req.body.category_name,
       });
       res.status(200).json(newCategory);
   } catch(err) {
@@ -44,11 +44,16 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const updateCategoryById = await Category.update({
-      where: {
-        id: req.params.id
+    const updateCategoryById = await Category.update(
+      {
+        category_name: req.body.category_name,
+      },
+      {
+        where: {
+          id: req.params.id, 
+        }
       }
-    });
+    );
 
     if(!updateCategoryById[0]) {
       res.status(404).json({message: `Category with that id does not exist!`})
@@ -68,10 +73,6 @@ router.delete('/:id', async (req, res) => {
         id: req.params.id,
       }
     });
-
-    if(!deleteCategory[0]) {
-      res.status(404).json({message: `Category with that id does not exist!`})
-    }
 
     res.status(200).json(deleteCategory);
   } catch(err) {
